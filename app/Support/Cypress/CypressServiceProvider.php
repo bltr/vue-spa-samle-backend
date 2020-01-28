@@ -9,7 +9,7 @@ class CypressServiceProvider extends ServiceProvider
 {
     private $routeConfig = [
         'namespace' => 'App\Support\Cypress',
-        'prefix' => '__cypress',
+        'prefix' => 'api/__cypress',
     ];
 
     public function boot()
