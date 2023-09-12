@@ -4,7 +4,7 @@ namespace Tests\Feature\Auth;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Testing\TestResponse;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
@@ -58,7 +58,7 @@ class RegisterTest extends TestCase
     public function can_not_register_with_already_taken_email()
     {
         $email = 'already-taken-email@mail.com';
-        factory(User::class)->create(['email' => $email]);
+        User::factory()->create(['email' => $email]);
 
         $response = $this->register(['email' => $email]);
 
@@ -85,7 +85,17 @@ class RegisterTest extends TestCase
         $response = $this->register(['password' => '1234567']);
 
         $response->assertStatus(422);
-        $this->assertError($response, 'password', 'The password must be at least 8 characters.');
+        $response->assertJson(
+            [
+                "message" => "The password must be at least 8 characters. (and 1 more error)",
+                "errors" => [
+                    "password" => [
+                        "The password must be at least 8 characters.",
+                        "The password confirmation does not match."
+                    ]
+                ]
+            ]
+        );
     }
 
     /**
@@ -114,7 +124,7 @@ class RegisterTest extends TestCase
     private function assertError(TestResponse $response, $attribute, $message)
     {
         $response->assertJson([
-            'message' => 'The given data was invalid.',
+            'message' => $message,
             'errors' => [
                 $attribute => [$message]
             ]

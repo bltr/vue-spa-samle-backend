@@ -15,7 +15,7 @@ class RefreshTest extends TestCase
      */
     public function user_can_refresh_access_token()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $token = auth()->login($user);
 
         $response = $this->postJson('/api/auth/refresh', [], ['Authorization' => 'Bearer ' . $token])
@@ -32,7 +32,7 @@ class RefreshTest extends TestCase
      */
     public function not_authenticated_user_cant_refresh_access_token()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $this->postJson('/api/auth/refresh')
             ->assertStatus(401);

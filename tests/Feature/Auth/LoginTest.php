@@ -15,7 +15,7 @@ class LoginTest extends TestCase
      */
     public function user_can_login()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->postJson('/api/auth/login', ['email' => $user->email, 'password' => 'password']);
 
@@ -30,7 +30,7 @@ class LoginTest extends TestCase
      */
     public function user_can_not_login_with_not_registered_email()
     {
-        factory(User::class)->create(['email' => 'admin@mail.com']);
+        User::factory()->create(['email' => 'admin@mail.com']);
 
         $response = $this->postJson(
             '/api/auth/login',
@@ -47,7 +47,7 @@ class LoginTest extends TestCase
      */
     public function user_can_not_login_with_incorrect_password()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
 
         $response = $this->postJson(
             '/api/auth/login',
@@ -67,7 +67,7 @@ class LoginTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'The given data was invalid.',
+            'message' => 'The email field is required.',
             'errors' => [
                 'email' => ['The email field is required.']
             ]
@@ -83,7 +83,7 @@ class LoginTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'The given data was invalid.',
+            'message' => 'The email must be a valid email address.',
             'errors' => [
                 'email' => ['The email must be a valid email address.']
             ]
@@ -99,7 +99,7 @@ class LoginTest extends TestCase
 
         $response->assertStatus(422);
         $response->assertJson([
-            'message' => 'The given data was invalid.',
+            'message' => 'The password field is required.',
             'errors' => [
                 'password' => ['The password field is required.']
             ]

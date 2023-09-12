@@ -16,7 +16,7 @@ class LogoutTest extends TestCase
      */
     public function authenticated_user_can_logout()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $token = auth()->login($user);
 
         $this->postJson('/api/auth/logout', [], ['Authorization' => 'Bearer ' . $token])->assertStatus(200);

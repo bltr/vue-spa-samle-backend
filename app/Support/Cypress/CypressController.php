@@ -19,7 +19,7 @@ class CypressController
 
         $class = "App\\" . ucfirst(strtolower($validated['model']));
 
-        return factory($class, $validated['amount'] ?? null)
+        return $class::factory($validated['amount'] ?? null)
             ->create($validated['attributes'] ?? []);
     }
 
@@ -33,7 +33,7 @@ class CypressController
     {
         $validated = $request->validate(['attributes' => 'sometimes|array']);
 
-        $user = factory(User::class)->create($validated['attributes'] ?? []);
+        $user = User::factory()->create($validated['attributes'] ?? []);
         $token = Auth::login($user);
 
         return ['user' => $user, 'access_token' => $token];

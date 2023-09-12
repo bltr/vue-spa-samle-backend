@@ -15,7 +15,7 @@ class UserTest extends TestCase
      */
     public function user_can_get_his_profile_info()
     {
-        $user = factory(User::class)->create();
+        $user = User::factory()->create();
         $token = auth()->login($user);
 
         $this->getJson('/api/auth/user', ['Authorization' => 'Bearer ' . $token])

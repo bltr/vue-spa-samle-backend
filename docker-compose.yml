@@ -3,7 +3,9 @@ version: '3.6'
 services:
 
   php:
-    image: '${APP_NAME}_php'
+    build:
+      context: docker
+      dockerfile: php.docker
     user: 1000:1000
     environment:
       DB_DATABASE: $DB_DATABASE

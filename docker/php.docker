@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.1-fpm-alpine
 
 ENV COMPOSER_HOME="/composer"
 ENV COMPOSER_ALLOW_SUPERUSER=1
@@ -28,11 +28,11 @@ RUN set -ex \
 #------------------------------------------------------------------
 #  Pecl extensions
 #------------------------------------------------------------------
-    && pecl install xdebug-2.9.0 \
-    && docker-php-ext-enable xdebug \
-    && echo 'xdebug.remote_connect_back=1' >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini \
-    && echo 'xdebug.remote_enable=1' >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini \
-    && echo 'xdebug.remote_autostart=1' >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini \
+#    && pecl install xdebug-2.9.0 \
+#    && docker-php-ext-enable xdebug \
+#    && echo 'xdebug.remote_connect_back=1' >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini \
+#    && echo 'xdebug.remote_enable=1' >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini \
+#    && echo 'xdebug.remote_autostart=1' >> $PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini \
 #------------------------------------------------------------------
     && apk del --no-network .build-deps \
     && php -v \
